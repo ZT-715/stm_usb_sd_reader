@@ -1,0 +1,182 @@
+[
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/gpio.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/gpio.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/gpio.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/main.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/main.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/main.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/spi.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/spi.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/spi.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/stm32f1xx_hal_msp.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/stm32f1xx_hal_msp.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/stm32f1xx_hal_msp.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/stm32f1xx_it.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/stm32f1xx_it.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/stm32f1xx_it.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/syscalls.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/syscalls.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/syscalls.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/sysmem.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/sysmem.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/sysmem.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/system_stm32f1xx.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/system_stm32f1xx.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/system_stm32f1xx.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Core/Src/usb_ll.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Src/usb_ll.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Src/usb_ll.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc -mcpu\u003dcortex-m3 -g3 -DDEBUG -c -x assembler-with-cpp --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Core/Startup/startup_stm32f103c8tx.o\" \"/Users/wymac/Developer/new_usb_sd_reader/Core/Startup/startup_stm32f103c8tx.s\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Core/Startup/startup_stm32f103c8tx.s"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd_ex.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd_ex.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pcd_ex.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usb.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usb.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usb.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_bot.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_bot.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_bot.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_data.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_data.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_data.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_scsi.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_scsi.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_scsi.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/App/usb_device.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/USB_DEVICE/App/usb_device.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/App/usb_device.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/App/usbd_desc.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/USB_DEVICE/App/usbd_desc.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/App/usbd_desc.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/App/usbd_storage_if.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/USB_DEVICE/App/usbd_storage_if.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/App/usbd_storage_if.c"
+  },
+  {
+    "directory": "/Users/wymac/Developer/new_usb_sd_reader",
+    "command": "arm-none-eabi-gcc \"/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/Target/usbd_conf.c\" -mcpu\u003dcortex-m3 -std\u003dgnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc -Ofast -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -Wswitch-default -Wswitch-enum -Wconversion -v -fstack-usage -fcyclomatic-complexity --specs\u003dnano.specs -mfloat-abi\u003dsoft -mthumb -o \"/Users/wymac/Developer/new_usb_sd_reader/Debug/USB_DEVICE/Target/usbd_conf.o\"",
+    "file": "/Users/wymac/Developer/new_usb_sd_reader/USB_DEVICE/Target/usbd_conf.c"
+  }
+]
