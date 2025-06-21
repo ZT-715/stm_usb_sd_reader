@@ -109,7 +109,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
+//    MX_USB_DEVICE_Init();
   usb_init();
+
   /* USER CODE BEGIN 2 */
   printf("\r"); // start serial
   printf("Start Program:\r\n");
@@ -120,7 +122,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  usb_poll();
+    /* USER CODE END WHILE */
+	  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+	  HAL_Delay(500);
+//	  __NOP();
+    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }

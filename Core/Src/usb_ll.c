@@ -1,19 +1,56 @@
 //
 // Created by Gabriel Zanella on 21/06/25.
 //
+#include "usb_ll.h"
 
 #include "stm32f1xx.h"
-#include "usb_ll.h"
+#include "pma.h"
+
 #include <stdbool.h>
+#include <string.h>
 
-#define USB_BASE_ADDR 0x40005C00
-#define PMA_ADDR ((uint16_t *)0x40006000)
+volatile uint16_t* USB_PMA = ((volatile uint16_t*) USB_PMAADDR);
 
-#define EP0_SIZE 64
+// MSC RAM TEST ALLOCATION
+static uint8_t msc_storage[MSC_NUM_BLOCKS][MSC_BLOCK_SIZE]; // RAM disk
 
-static uint8_t new_address = 0;
-static bool pending_address = 0;
-static uint8_t config_value = 0;
+static volatile uint8_t new_address = 0;
+static volatile bool pending_address = 0;
+static volatile uint8_t config_value = 0;
+
+static uint8_t write_buffer[MSC_BLOCK_SIZE];  		   // Blocos são 512, porém USB é 64 bytes
+static volatile uint16_t write_buffer_offset = 0;      // Offset atual do buffer
+static volatile uint32_t write_lba = 0;                // Endereço lógico do bloco
+static volatile uint16_t write_blocks_remaining = 0;   // Quantos blocos faltam
+static volatile uint32_t cbw_tag = 0;
+
+static uint8_t read_buffer[MSC_BLOCK_SIZE];
+static volatile uint16_t read_buffer_offset = 0;
+static volatile uint32_t read_lba = 0;
+static volatile uint16_t read_blocks_remaining = 0;
+static volatile uint32_t read_cbw_tag = 0;
+
+typedef struct {
+    uint32_t tag;
+    uint32_t residue;
+    uint8_t status;
+    bool pending;
+} msc_csw_t;
+
+volatile msc_csw_t pending_csw;
+
+static const inquiry_response_t inquiry_response = {
+    .peripheral = 0x00,          // Direct-access device
+    .rmb = 0x80,                 // Removable
+    .version = 0x00,
+    .response_data_format = 0x01,
+    .additional_length = 31,
+    .reserved = {0, 0, 0},
+    .vendor_id = "STM32   ",
+    .product_id = "USB Flash Drive ",
+    .product_rev = "1.00"
+};
+
 
 // Configuration Descriptor Tree (total 32 bytes)
 const uint8_t config_descriptor[] = {
@@ -63,9 +100,9 @@ const uint8_t device_descriptor[] = {
     0x00,       // bDeviceClass (Defined in Interface)
     0x00,       // bDeviceSubClass
     0x00,       // bDeviceProtocol
-    EP0_SIZE,   // bMaxPacketSize
+    0x40,   	// bMaxPacketSize
     0x83, 0x04, // idVendor (0x0483 - STMicro)
-    0x40, 0x57, // idProduct
+    0x78, 0x56, // idProduct
     0x00, 0x01, // bcdDevice
     0x01,       // iManufacturer
     0x02,       // iProduct
@@ -73,132 +110,467 @@ const uint8_t device_descriptor[] = {
     0x01        // bNumConfigurations
 };
 
+
+// MSC functions
+
+static void msc_init(void);
+
+static void msc_handle_write(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_start_stop_unit(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_read(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_mode_sense6(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_request_sense(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_read_capacity(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_test_unit_ready(const MSC_CmdBlockWrapper_t *cbw);
+
+static void msc_handle_inquiry(const MSC_CmdBlockWrapper_t *cbw);
+
+// End MSC functions
+
+// USB functions
+
+static void usb_ep0_setup(void);
+
+static void usb_msc_ep_setup(void);
+
+static inline void usb_ep0_send(uint8_t *data, uint16_t len);
+
+static inline void usb_ep1_send(uint8_t *data, uint16_t len);
+
+static void usb_send_csw(uint32_t tag, uint32_t residue, uint8_t status);
+
+static void usb_defer_csw(uint32_t tag, uint32_t residue, uint8_t status);
+
+static void usb_process_cbw(const MSC_CmdBlockWrapper_t *cbw);
+
+static void usb_handle_ctr(void);
+
+void usb_init(void);
+
+// End USB functions
+
 static void usb_ep0_setup(void) {
-    // PMA: Endereço 0x40 para RX e 0x80 para TX
-    USB->BTABLE = 0; // PMA começa no offset 0
+    // EP0 OUT (RX)
+    USB_PMA[EP0_RX_PMA_OFFSET] = EP0_RX_ADDR;
+    USB_PMA[EP0_RX_PMA_OFFSET + 1] = 0x00;
 
-    // Endereço do buffer EP0 OUT (recepção)
-    PMA_ADDR[0] = 0x0040;      // Endereço buffer
-    PMA_ADDR[1] = 0x8000 | EP0_SIZE; // Count RX
+    // EP0 IN (TX)
+    USB_PMA[EP0_TX_PMA_OFFSET] = EP0_TX_ADDR;
+    USB_PMA[EP0_TX_PMA_OFFSET + 1] = 0x00;
 
-    // Endereço do buffer EP0 IN (transmissão)
-    PMA_ADDR[2] = 0x0080;      // Endereço buffer
-    PMA_ADDR[3] = 0;           // Count TX
+	// 2. Configura EP0 como CONTROLE + RX válido
+	USB->EP0R = (0 << USB_EP0R_EA_Pos) |  // Endpoint address = 0
+				USB_EP0R_EP_TYPE_0 |      // Control endpoint (0b01)
+				USB_EP0R_STAT_RX_0;       // RX = VALID (0b10)
+}
 
-    // EP0: tipo controle, estado válido de RX
-    USB->EP0R = USB_EP_CONTROL | USB_EP_RX_VALID;
+static void usb_msc_ep_setup() {
+    // EP1 IN (BULK TX)
+    USB_PMA[EP1_IN_PMA_OFFSET] = EP1_IN_ADDR;
+    USB_PMA[EP1_IN_PMA_OFFSET + 1] = 0x00;
+    USB->EP1R = USB_EP_BULK | USB_EP_TX_NAK;
+
+    USB->EP1R = (1 << USB_EP1R_EA_Pos) |  // Endpoint address = 1
+                USB_EP1R_EP_TYPE_1 |      // Bulk endpoint (0b10)
+                USB_EP1R_STAT_TX_1;       // TX = NAK (0b01)
+
+
+    // EP2 OUT (BULK RX)
+    USB_PMA[EP2_OUT_PMA_OFFSET] = EP2_OUT_ADDR;
+    USB_PMA[EP2_OUT_PMA_OFFSET + 1] = 0x00;
+    USB->EP2R = USB_EP_BULK | USB_EP_RX_VALID;
+
+    USB->EP2R = (2 << USB_EP2R_EA_Pos) |  // Endpoint address = 2
+                USB_EP2R_EP_TYPE_1 |      // Bulk endpoint (0b10)
+                USB_EP2R_STAT_RX_0;       // RX = VALID (0b10)
 }
 
 void usb_init(void) {
+
+	// Reset flags
+	new_address = 0;
+	pending_address = 0;
+	config_value = 0;
+	msc_init();
+
+	// Enable USB-peripheral clock
     RCC->APB1ENR |= RCC_APB1ENR_USBEN;
-    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-    AFIO->MAPR &= ~AFIO_MAPR_SWJ_CFG; // Libera PA11/12
 
-    // PA11/12 como AF
-    GPIOA->CRH &= ~(GPIO_CRH_CNF11 | GPIO_CRH_CNF12);
-    GPIOA->CRH |= (GPIO_CRH_CNF11_1 | GPIO_CRH_CNF12_1); // AF push-pull
-    GPIOA->CRH |= (GPIO_CRH_MODE11 | GPIO_CRH_MODE12);   // 50 MHz
+    // PA11 and PA12 as analog (safe state)
+    GPIOA->CRH &= ~(GPIO_CRH_CNF11 | GPIO_CRH_MODE11 |
+                    GPIO_CRH_CNF12 | GPIO_CRH_MODE12);
 
+    // Reset USB high
     USB->CNTR = USB_CNTR_FRES;
+    HAL_Delay(1U);
+
+    // Clear USB reset
     USB->CNTR = 0;
+    HAL_Delay(1U);
+
+    // Clear pending interruption
     USB->ISTR = 0;
 
+    // BTABLE (Buffer Descriptor Table)
+    USB->BTABLE = USB_BTABLE_BASE; // PMA (Packat Memory Area)
+
+    // SCSI EP0
     usb_ep0_setup();
+
+    // Bulk MSC EP1 TX EP2 RX
+    usb_msc_ep_setup();
+
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_CTRM;
     NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
 }
 
-void usb_handle_ctr(void) {
-    uint16_t ep_val = USB->EP0R;
+static inline void usb_ep0_send(uint8_t *data, uint16_t len) {
+    usb_pma_write(USB_PMA_EP0_TX, data, len);
+    usb_set_tx_count(0, len);
+    USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_TX_VALID;
+}
 
-    if ((ep_val & USB_EP_CTR_RX) == USB_EP_CTR_RX) {
-        uint16_t status = ep_val & USB_EP0R_STAT_RX;
-        uint16_t type = ep_val & USB_EP_KIND;
+static inline void usb_ep1_send(uint8_t *data, uint16_t len) {
+    usb_pma_write(USB_PMA_EP1_IN, data, len);
+    usb_set_tx_count(1, len);
+    USB->EP1R = (USB->EP1R & USB_EPREG_MASK) | USB_EP_TX_VALID;
+}
+static void usb_send_csw(uint32_t tag, uint32_t residue, uint8_t status) {
 
-        if ((ep_val & USB_EP_SETUP) == USB_EP_SETUP) {
-            // Pacote SETUP (tipo de controle)
-            usb_setup_packet_t setup;
+	MSC_CmdStatusWrapper_t csw = {
+        .dCSWSignature = CSW_SIGNATURE,
+        .dCSWTag = tag,
+        .dCSWDataResidue = residue,
+        .bCSWStatus = status
+    };
+    usb_ep1_send((uint8_t*)&csw, sizeof(csw));
+}
 
-            uint16_t *pma = &PMA_ADDR[0x40 >> 1]; // EP0 RX buffer
-            uint8_t *buf = (uint8_t *)&setup;
+static void usb_defer_csw(uint32_t tag, uint32_t residue, uint8_t status){
+    pending_csw.tag = tag;
+    pending_csw.residue = residue;
+    pending_csw.status = status;
+    pending_csw.pending = true;
+}
 
-            for (uint8_t i = 0; i < 8U; i++) {
-                buf[i] = pma[i];
-            }
-
-
-            if (setup.bRequest == 0x06) { // GET_DESCRIPTOR
-                uint8_t desc_type = setup.wValue >> 8;
-                uint8_t desc_index = setup.wValue & 0xFF;
-
-                if (desc_type == 1) {
-                    // Device Descriptor
-                    uint16_t *tx_buf = &PMA_ADDR[0x80 >> 1];
-                    for (int i = 0; i < sizeof(device_descriptor); i++) {
-                        ((uint8_t *)tx_buf)[i] = device_descriptor[i];
-                    }
-
-                    PMA_ADDR[3] = sizeof(device_descriptor);
-                    USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_TX_VALID;
-                }
-                else if (desc_type == 2) {
-                    // Configuration Descriptor
-                    uint16_t *tx_buf = &PMA_ADDR[0x80 >> 1];
-                    uint16_t len = sizeof(config_descriptor);
-                    if (setup.wLength < len) len = setup.wLength;
-
-                    for (int i = 0; i < len; i++) {
-                        ((uint8_t *)tx_buf)[i] = config_descriptor[i];
-                    }
-
-                    PMA_ADDR[3] = len;
-                    USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_TX_VALID;
-                }
-            }
-            else if (setup.bRequest == 0x05) { // SET_ADDRESS
-                new_address = setup.wValue & 0x7F;
-                pending_address = true;
-
-                // ACK com ZPL(zero-length packet)
-                PMA_ADDR[3] = 0; // TX count zero
-                USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_TX_VALID;
-            }
-            else if (setup.bRequest == 0x09) { // SET_CONFIGURATION
-                config_value = setup.wValue & 0xFF;
-
-                // ACK com ZLP
-                PMA_ADDR[3] = 0;
-                USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_TX_VALID;
-            }
-            else if (setup.bRequest == 0x08) { // GET_CONFIGURATION
-                uint16_t *tx_buf = &PMA_ADDR[0x80 >> 1];
-                ((uint8_t *)tx_buf)[0] = config_value;
-
-                PMA_ADDR[3] = 1; // apenas 1 byte
-                USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_TX_VALID;
-            }
-
-            // Libera o RX
-            USB->EP0R = (USB->EP0R & USB_EPREG_MASK) | USB_EP_RX_VALID;
+static void msc_init(void) {
+    for (int i = 0; i < MSC_NUM_BLOCKS; i++) {
+        for (int j = 0; j < MSC_BLOCK_SIZE; j++) {
+            msc_storage[i][j] = 0U;
         }
-
-        USB->EP0R &= ~USB_EP_CTR_RX;
     }
+}
 
-    if ((ep_val & USB_EP_CTR_TX) == USB_EP_CTR_TX) {
-        USB->EP0R &= ~USB_EP_CTR_TX;
+static void usb_process_cbw(const MSC_CmdBlockWrapper_t *cbw) {
+    switch (cbw->CBWCB[0]) {
 
-        if (pending_address) {
-            USB->DADDR = USB_DADDR_EF | new_address;
-            pending_address = false;
-        }
+		case 0x00: // TEST UNIT READY
+			msc_handle_test_unit_ready(cbw);
+			break;
+
+		case 0x05:
+			msc_handle_request_sense(cbw);
+			break;
+
+		case 0x12: // INQUIRY
+			msc_handle_inquiry(cbw);
+			break;
+
+		case 0x1A:
+			msc_handle_mode_sense6(cbw);
+			break;
+
+        case 0x1B:
+        	msc_handle_start_stop_unit(cbw); //
+        	break;
+
+		case 0x25: // READ CAPACITY (10)
+			msc_handle_read_capacity(cbw);
+			break;
+
+		case 0x28: // READ(10)
+			msc_handle_read(cbw);
+			break;
+
+		case 0x2A: // WRITE(10)
+			msc_handle_write(cbw);
+			break;
+
+		default:
+			usb_send_csw(cbw->dCBWTag, cbw->dCBWDataTransferLength, 0x01); // Failed
+			break;
+    }
+}
+
+inline void usb_handle_ctr(void) {
+	MSC_CmdBlockWrapper_t cbw;
+
+	// Register is cleared on read  (Order matters)
+    uint16_t ep_idx = USB->ISTR & USB_ISTR_EP_ID;
+    switch(ep_idx) {
+    case(0): { // Configuration
+        uint16_t ep0_val = USB->EP0R;
+		if ((ep0_val & USB_EP_CTR_RX)) {
+			if ((ep0_val & USB_EP_SETUP)) {
+				usb_setup_packet_t setup;
+
+				usb_pma_read(USB_PMA_EP0_RX, (uint8_t*)&setup, sizeof(usb_setup_packet_t));
+
+				if (setup.bRequest == 0x06) { // GET_DESCRIPTOR
+					uint8_t desc_type = setup.wValue >> 8;
+					uint8_t desc_index = (uint8_t)(setup.wValue & 0xFF);
+
+					if (desc_type == 1) {
+						// Device Descriptor
+						usb_ep0_send((uint8_t*)device_descriptor, sizeof(device_descriptor));
+					}
+					else if (desc_type == 2) {
+						// Configuration Descriptor
+						uint16_t len = setup.wLength > sizeof(config_descriptor) ? sizeof(config_descriptor) : setup.wLength;
+						usb_ep0_send((uint8_t*)config_descriptor, len);
+					}
+				}
+				else if (setup.bRequest == 0x05) { // SET_ADDRESS
+					new_address = setup.wValue & 0x7F;
+					pending_address = true;
+
+					// ACK com ZPL (zero-length packet)
+					usb_ep0_send(NULL, 0);
+				}
+				else if (setup.bRequest == 0x09) { // SET_CONFIGURATION
+					config_value = setup.wValue & 0xFF;
+
+					// ACK com ZLP
+					usb_ep0_send(NULL, 0);
+				}
+				else if (setup.bRequest == 0x08) { // GET_CONFIGURATION
+					usb_ep0_send((uint8_t*)&config_value, sizeof(config_value));
+				}
+			}
+		}
+		else if ((ep0_val & USB_EP_CTR_TX) && pending_address) {
+			USB->DADDR = USB_DADDR_EF | new_address;
+			pending_address = false;
+		}
+
+		USB->EP0R = USB->EP0R & (~USB_EP_CTR_RX & USB_EPREG_MASK);
+		break;
+    }
+    case(1): { // IN -> Dispositivo para host
+        uint16_t ep1_val = USB->EP1R;
+
+		if (ep1_val & USB_EP_CTR_TX) {
+			if (pending_csw.pending) {
+				usb_send_csw(pending_csw.tag, pending_csw.residue, pending_csw.status);
+				pending_csw.pending = false;
+			}
+			else if (read_blocks_remaining > 0) {
+				if (read_buffer_offset < MSC_BLOCK_SIZE) {
+					// Envia próximo pacote de 64 bytes
+					usb_ep1_send(&read_buffer[read_buffer_offset], BULK_PACKET_SIZE);
+					read_buffer_offset += BULK_PACKET_SIZE;
+				}
+				else {
+					// Carregar próximo bloco
+					read_lba++;
+					read_blocks_remaining--;
+
+					if (read_blocks_remaining > 0) {
+						memcpy(read_buffer, msc_storage[read_lba], MSC_BLOCK_SIZE);
+						read_buffer_offset = 0;
+						usb_ep1_send(&read_buffer[read_buffer_offset], BULK_PACKET_SIZE);
+						read_buffer_offset += BULK_PACKET_SIZE;
+					}
+					else {
+						// Tudo enviado, envia CSW
+						usb_send_csw(read_cbw_tag, 0, 0x00); // Success
+					}
+				}
+			}
+		}
+        USB->EP1R = (USB->EP1R & USB_EPREG_MASK) & ~USB_EP_CTR_TX;
+		break;
+    }
+    case(2): { // OUT -> Host para dispositivo
+        uint16_t ep2_val = USB->EP2R;
+
+		if (ep2_val & USB_EP_CTR_RX) {
+			if (write_blocks_remaining > 0) {
+		        uint8_t temp_buf[BULK_PACKET_SIZE];
+		        usb_pma_read(USB_PMA_EP2_OUT, temp_buf, BULK_PACKET_SIZE);
+
+		        // Copia para o buffer de escrita
+		        memcpy(&write_buffer[write_buffer_offset], temp_buf, BULK_PACKET_SIZE);
+		        write_buffer_offset += BULK_PACKET_SIZE;
+
+		        // Quando preencher 512 bytes:
+		        if (write_buffer_offset >= MSC_BLOCK_SIZE) {
+		            // Escreve na memória de armazenamento
+		            memcpy(msc_storage[write_lba], write_buffer, MSC_BLOCK_SIZE);
+
+		            write_lba++;
+		            write_blocks_remaining--;
+		            write_buffer_offset = 0; // Zera para acumular o próximo bloco
+
+		            if (write_blocks_remaining == 0) {
+		                usb_send_csw(cbw_tag, 0, 0x00); // Success
+		            }
+		        }
+			}
+			else {
+				usb_pma_read(USB_PMA_EP2_OUT, (uint8_t*)&cbw, sizeof(cbw));
+
+				if (cbw.dCBWSignature == CBW_SIGNATURE) {
+					usb_process_cbw(&cbw);
+				}
+			}
+			USB->EP2R = (USB->EP2R & USB_EPREG_MASK) | USB_EP_RX_VALID;
+		}
+		break;
+    }
+    default:
+    	break;
     }
 }
 
 
 void USB_LP_CAN1_RX0_IRQHandler(void) {
-    if (USB->ISTR & USB_ISTR_CTR) {
-        usb_handle_ctr();
-        USB->ISTR &= ~USB_ISTR_CTR;
+    if (USB->ISTR & USB_ISTR_RESET) {
+        USB->ISTR &= ~USB_ISTR_RESET;
+        USB->DADDR = USB_DADDR_EF;
+        usb_init();
     }
+    else if (USB->ISTR & USB_ISTR_CTR) {
+        usb_handle_ctr();
+
+    }
+}
+
+static void msc_handle_write(const MSC_CmdBlockWrapper_t *cbw) {
+    write_lba = (cbw->CBWCB[2] << 24) | (cbw->CBWCB[3] << 16) |
+                  (cbw->CBWCB[4] << 8)  | (cbw->CBWCB[5]);
+    write_blocks_remaining = (cbw->CBWCB[7] << 8) | cbw->CBWCB[8];
+    cbw_tag = cbw->dCBWTag;
+
+    if (write_lba >= MSC_NUM_BLOCKS || (write_lba + write_blocks_remaining) > MSC_NUM_BLOCKS) {
+        usb_send_csw(cbw_tag, cbw->dCBWDataTransferLength, 0x01); // Fail
+        return;
+    }
+
+    write_buffer_offset = 0;
+
+    // Aguarda pacotes OUT no EP2
+}
+
+
+static void msc_handle_start_stop_unit(const MSC_CmdBlockWrapper_t *cbw) {
+    usb_send_csw(cbw->dCBWTag, 0, 0x00); // Success
+}
+
+static void msc_handle_read(const MSC_CmdBlockWrapper_t *cbw) {
+    read_lba = (cbw->CBWCB[2] << 24) |
+               (cbw->CBWCB[3] << 16) |
+               (cbw->CBWCB[4] << 8)  |
+               (cbw->CBWCB[5]);
+
+    read_blocks_remaining = (cbw->CBWCB[7] << 8) | cbw->CBWCB[8];
+    read_cbw_tag = cbw->dCBWTag;
+
+    if (read_lba >= MSC_NUM_BLOCKS || (read_lba + read_blocks_remaining) > MSC_NUM_BLOCKS) {
+        usb_send_csw(read_cbw_tag, cbw->dCBWDataTransferLength, 0x01); // Fail
+        return;
+    }
+
+    // Copia primeiro bloco para o buffer
+    memcpy(read_buffer, msc_storage[read_lba], MSC_BLOCK_SIZE);
+    read_buffer_offset = 0;
+
+    // Envia o primeiro pacote de 64 bytes
+    usb_ep1_send(&read_buffer[read_buffer_offset], BULK_PACKET_SIZE);
+    read_buffer_offset += BULK_PACKET_SIZE;
+}
+
+
+static void msc_handle_mode_sense6(const MSC_CmdBlockWrapper_t *cbw) {
+    uint8_t response[4] = {0};
+
+    response[0] = 0x03; // Mode data length (n-1)
+    response[1] = 0x00; // Medium type
+    response[2] = 0x00; // Device-specific (bit 7 = write protect)
+    response[3] = 0x00; // Block descriptor length (no block descriptor)
+
+    uint32_t len = cbw->dCBWDataTransferLength;
+    if (len > sizeof(response)) len = sizeof(response);
+
+    usb_ep1_send(response, len);
+
+    usb_defer_csw(cbw->dCBWTag, cbw->dCBWDataTransferLength - len, 0x00); // Success
+}
+
+static void msc_handle_request_sense(const MSC_CmdBlockWrapper_t *cbw) {
+    uint8_t response[18] = {0};
+
+    response[0] = 0x70; // Response Code: current errors
+    response[2] = 0x00; // Sense Key: no error
+    response[7] = 10;   // Additional Sense Length
+    response[12] = 0x00; // ASC
+    response[13] = 0x00; // ASCQ
+
+    uint32_t len = cbw->dCBWDataTransferLength;
+    if (len > 18) len = 18;
+
+    usb_ep1_send(response, len);
+
+    usb_defer_csw(cbw->dCBWTag, cbw->dCBWDataTransferLength - len, 0x00); // Success
+}
+
+void msc_handle_read_capacity(const MSC_CmdBlockWrapper_t *cbw) {
+    uint8_t response[8];
+
+    uint32_t last_lba = MSC_NUM_BLOCKS - 1;
+    uint32_t block_len = MSC_BLOCK_SIZE;
+
+    // Converter para big-endian
+    response[0] = (last_lba >> 24) & 0xFF;
+    response[1] = (last_lba >> 16) & 0xFF;
+    response[2] = (last_lba >> 8) & 0xFF;
+    response[3] = (last_lba >> 0) & 0xFF;
+
+    response[4] = (block_len >> 24) & 0xFF;
+    response[5] = (block_len >> 16) & 0xFF;
+    response[6] = (block_len >> 8) & 0xFF;
+    response[7] = (block_len >> 0) & 0xFF;
+
+    uint32_t len = cbw->dCBWDataTransferLength;
+    if (len > 8) len = 8;
+
+    usb_ep1_send(response, len);
+
+    usb_defer_csw(cbw->dCBWTag, cbw->dCBWDataTransferLength - len, 0x00); // Success
+}
+
+void msc_handle_test_unit_ready(const MSC_CmdBlockWrapper_t *cbw) {
+    if (cbw->dCBWDataTransferLength != 0) {
+        usb_send_csw(cbw->dCBWTag, cbw->dCBWDataTransferLength, 0x01); // Fail
+        return;
+    }
+
+    usb_send_csw(cbw->dCBWTag, 0, 0x00); // Success
+}
+
+void msc_handle_inquiry(const MSC_CmdBlockWrapper_t *cbw) {
+    uint16_t length = cbw->dCBWDataTransferLength;
+    if (length > sizeof(inquiry_response)) {
+        length = sizeof(inquiry_response);
+    }
+
+    usb_ep1_send((uint8_t *)&inquiry_response, length);
+
+    usb_defer_csw(cbw->dCBWTag, 0, 0x00); // status 0x00 = Passed
 }
