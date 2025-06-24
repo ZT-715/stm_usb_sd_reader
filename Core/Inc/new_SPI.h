@@ -14,7 +14,12 @@
 
 
 // SPI Interruption handler
-extern SPI_HandleTypeDef hspi2;
+extern SPI_HandleTypeDef hspi1;
+
+typedef struct {
+    uint8_t csd[16];
+    uint32_t capacity;
+} SD_CSD_t;
 
 // Defines
 #define SD_CS_LOW()       HAL_GPIO_WritePin(SD_CS_GPIO_Port, SD_CS_Pin, GPIO_PIN_RESET) //Finalizar comunicação
@@ -37,7 +42,17 @@ extern SPI_HandleTypeDef hspi2;
 #define ACMD41 0x29  // Inicializa SDHC/SDXC (seguido de CMD55)
 #define CMD58  0x3A  // Lê o OCR (Operation Conditions Register) – útil para detectar SDHC
 
-// Declarações de Funções
-void MX_SPI2_Init(void);
+#define TOKEN_WRITE   0xFE    // Token de início de escrita
+
+
+// Funções
+void SPI_Init(uint32_t prescaler);
+uint8_t SPI_Transfer(uint8_t data);
+uint8_t SD_SendCommand(uint8_t cmd, uint32_t arg, uint8_t crc);
+uint8_t SD_WaitReady(void);
+uint8_t SD_ReadCSD(SD_CSD_t *csdInfo);
+uint8_t SD_Init(void);
+uint8_t SD_ReadBlock(uint32_t block_addr, uint8_t *buffer);
+uint8_t SD_WriteBlock(uint32_t block_addr, const uint8_t *buffer);
 
 #endif /* __NEW_SPI_H__ */

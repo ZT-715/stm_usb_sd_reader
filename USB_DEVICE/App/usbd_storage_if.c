@@ -20,6 +20,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_storage_if.h"
+#include "new_spi.h"
+
 
 /* USER CODE BEGIN INCLUDE */
 
@@ -63,7 +65,7 @@
   */
 
 #define STORAGE_LUN_NBR                  1
-#define STORAGE_BLK_NBR                  0x01C
+//#define STORAGE_BLK_NBR                  0x01C
 #define STORAGE_BLK_SIZ                  0x200
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
@@ -71,7 +73,9 @@
 
 
 // MSC RAM TEST ALLOCATION
-uint8_t storage[STORAGE_BLK_NBR][STORAGE_BLK_SIZ] = {0}; // RAM disk
+//uint8_t storage[STORAGE_BLK_NBR][STORAGE_BLK_SIZ] = {0}; // RAM disk
+
+uint32_t storage_blk_num = 0;
 
 //static uint8_t write_buffer[MSC_BLOCK_SIZE];  		   // Blocos são 512, porém USB é 64 bytes
 //static volatile uint16_t write_buffer_offset = 0;      // Offset atual do buffer
@@ -194,12 +198,23 @@ USBD_StorageTypeDef USBD_Storage_Interface_fops_FS =
 int8_t STORAGE_Init_FS(uint8_t lun)
 {
   /* USER CODE BEGIN 2 */
+  if (SD_Init()) {
+	  printf("Start SD\r\n");
+  }
+  else return (HAL_ERROR);
 
-	for (uint16_t i = 0; i < STORAGE_BLK_NBR; i ++) {
-		for (uint16_t j = 0; j < STORAGE_BLK_SIZ; j++) {
-			storage[i][j] = j;
-		}
-	}
+  SD_CSD_t csd = {0};
+
+  if (SD_ReadCSD(&csd)) {
+	  printf("Capacity %lu bytes\r\n", csd.capacity);
+	  storage_blk_num = csd.capacity/512;
+  }
+  else return (HAL_ERROR);
+//	for (uint16_t i = 0; i < STORAGE_BLK_NBR; i ++) {
+//		for (uint16_t j = 0; j < STORAGE_BLK_SIZ; j++) {
+//			storage[i][j] = j;
+//		}
+//	}
   return (USBD_OK);
   /* USER CODE END 2 */
 }
@@ -214,7 +229,7 @@ int8_t STORAGE_Init_FS(uint8_t lun)
 int8_t STORAGE_GetCapacity_FS(uint8_t lun, uint32_t *block_num, uint16_t *block_size)
 {
   /* USER CODE BEGIN 3 */
-  *block_num  = STORAGE_BLK_NBR;
+  *block_num  = storage_blk_num;
   *block_size = STORAGE_BLK_SIZ;
   return (USBD_OK);
   /* USER CODE END 3 */
@@ -253,7 +268,8 @@ int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t bl
 {
   /* USER CODE BEGIN 6 */
 	for (uint16_t i = 0; i < blk_len; i++) {
-		memcpy(buf + i*STORAGE_BLK_SIZ, storage[blk_addr + i], STORAGE_BLK_SIZ);
+//		memcpy(buf + i*STORAGE_BLK_SIZ, storage[blk_addr + i], STORAGE_BLK_SIZ);
+		SD_ReadBlock(blk_addr + i, buf + i*STORAGE_BLK_SIZ);
 	}
 
 	return (USBD_OK);
@@ -269,7 +285,8 @@ int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t b
 {
   /* USER CODE BEGIN 7 */
 	for (uint16_t i = 0; i < blk_len; i++) {
-		memcpy(storage[blk_addr + i], buf + i*STORAGE_BLK_SIZ, STORAGE_BLK_SIZ);
+//		memcpy(storage[blk_addr + i], , STORAGE_BLK_SIZ);
+		SD_WriteBlock(blk_addr + i, buf + i*STORAGE_BLK_SIZ);
 	}
    return (USBD_OK);
   /* USER CODE END 7 */
