@@ -63,10 +63,27 @@
   */
 
 #define STORAGE_LUN_NBR                  1
-#define STORAGE_BLK_NBR                  0x10000
+#define STORAGE_BLK_NBR                  0x01C
 #define STORAGE_BLK_SIZ                  0x200
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
+
+
+
+// MSC RAM TEST ALLOCATION
+uint8_t storage[STORAGE_BLK_NBR][STORAGE_BLK_SIZ] = {0}; // RAM disk
+
+//static uint8_t write_buffer[MSC_BLOCK_SIZE];  		   // Blocos são 512, porém USB é 64 bytes
+//static volatile uint16_t write_buffer_offset = 0;      // Offset atual do buffer
+//static volatile uint32_t write_lba = 0;                // Endereço lógico do bloco
+//static volatile uint16_t write_blocks_remaining = 0;   // Quantos blocos faltam
+//static volatile uint32_t cbw_tag = 0;
+//
+//static uint8_t read_buffer[MSC_BLOCK_SIZE];
+//static volatile uint16_t read_buffer_offset = 0;
+//static volatile uint32_t read_lba = 0;
+//static volatile uint16_t read_blocks_remaining = 0;
+//static volatile uint32_t read_cbw_tag = 0;
 
 /* USER CODE END PRIVATE_DEFINES */
 
@@ -177,6 +194,12 @@ USBD_StorageTypeDef USBD_Storage_Interface_fops_FS =
 int8_t STORAGE_Init_FS(uint8_t lun)
 {
   /* USER CODE BEGIN 2 */
+
+	for (uint16_t i = 0; i < STORAGE_BLK_NBR; i ++) {
+		for (uint16_t j = 0; j < STORAGE_BLK_SIZ; j++) {
+			storage[i][j] = j;
+		}
+	}
   return (USBD_OK);
   /* USER CODE END 2 */
 }
@@ -229,7 +252,11 @@ int8_t STORAGE_IsWriteProtected_FS(uint8_t lun)
 int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 6 */
-  return (USBD_OK);
+	for (uint16_t i = 0; i < blk_len; i++) {
+		memcpy(buf + i*STORAGE_BLK_SIZ, storage[blk_addr + i], STORAGE_BLK_SIZ);
+	}
+
+	return (USBD_OK);
   /* USER CODE END 6 */
 }
 
@@ -241,7 +268,10 @@ int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t bl
 int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 7 */
-  return (USBD_OK);
+	for (uint16_t i = 0; i < blk_len; i++) {
+		memcpy(storage[blk_addr + i], buf + i*STORAGE_BLK_SIZ, STORAGE_BLK_SIZ);
+	}
+   return (USBD_OK);
   /* USER CODE END 7 */
 }
 

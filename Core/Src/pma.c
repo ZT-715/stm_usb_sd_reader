@@ -35,6 +35,6 @@ inline void usb_pma_read(usb_pma_offset_t pma_offset, uint8_t *data, uint16_t le
 }
 
 inline void usb_set_tx_count(uint8_t ep_num, uint16_t len) {
-    PMA[USB_BTABLE_ENTRY(ep_num) + 1] = len; // COUNT_TX
+    PMA[USB_BTABLE_ENTRY(ep_num) >> 4 + 1] = len; // COUNT_TX
 }
 

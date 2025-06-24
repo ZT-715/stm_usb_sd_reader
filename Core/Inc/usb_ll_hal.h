@@ -2,8 +2,9 @@
 // Created by Gabriel Zanella on 21/06/25.
 //
 
-#ifndef USB_LL_H
-#define USB_LL_H
+#ifndef USB_LL_HAL_H
+#define USB_LL_HAL_H
+
 #include <stdint.h>
 
 #define BULK_PACKET_SIZE 64
@@ -12,7 +13,6 @@
 
 #define CBW_SIGNATURE 			  0x43425355U
 #define CSW_SIGNATURE             0x53425355U
-
 
 /**
  * Setup package from host
@@ -23,7 +23,7 @@ typedef struct {
     uint16_t wValue;
     uint16_t wIndex;
     uint16_t wLength;
-}  __attribute__((packed)) usb_setup_packet_t;
+} usb_setup_packet_t;
 
 // Command Block Wrapper structure
 typedef struct {
@@ -85,4 +85,4 @@ typedef struct {
 
 void usb_init(void);
 
-#endif //USB_LL_H
+#endif //USB_LL_HAL_H

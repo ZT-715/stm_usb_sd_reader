@@ -30,7 +30,7 @@
 #define EP2_OUT_ADDR            0x100
 #define EP2_OUT_PMA_OFFSET      (EP2_OUT_ADDR >> 1)  // 0x80 (words)
 
-#define USB_BTABLE_ENTRY(n)   (USB_BTABLE_BASE + 4 * (n))
+#define USB_BTABLE_ENTRY(n)   (USB_BTABLE_BASE + 8 * (n))
 
 typedef enum {
     USB_PMA_EP0_RX = EP0_RX_PMA_OFFSET,
@@ -38,6 +38,13 @@ typedef enum {
     USB_PMA_EP1_IN = EP1_IN_PMA_OFFSET,
     USB_PMA_EP2_OUT = EP2_OUT_PMA_OFFSET,
 } usb_pma_offset_t;
+
+typedef struct {
+    uint16_t tx_addr;
+    uint16_t tx_count;
+    uint16_t rx_addr;
+    uint16_t rx_count;
+} __attribute__((packed)) usb_btable_entry_t;
 
 void usb_pma_read(usb_pma_offset_t pma_offset, uint8_t *data, uint16_t length);
 void usb_pma_write(usb_pma_offset_t pma_offset, const uint8_t *data, uint16_t length);

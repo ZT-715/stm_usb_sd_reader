@@ -18,14 +18,22 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "spi.h"
-//#include "usb_device.h"
+//#include "spi.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "usb_ll.h"
+
+//#include "usb_ll.h"
+//#include "pma.h"
+//#include "usb_ll_hal.h"
+
+#include "stm32f1xx.h"
+#include "stm32f1xx_hal.h"
+#include "usbd_def.h"
+#include "usbd_core.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -72,6 +80,8 @@ int _write(int file, char *ptr, int len) {
     return len;
 }
 
+
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,15 +118,17 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_SPI1_Init();
-  msc_init();
+//  MX_SPI1_Init();
   MX_USB_DEVICE_Init();
 //  usb_init();
 
   /* USER CODE BEGIN 2 */
   printf("\r"); // start serial
   printf("Start Program:\r\n");
-
+//  volatile uint16_t* PMA = ((volatile uint16_t*) USB_PMAADDR);
+//
+//  usb_btable_entry_t* btable = (usb_btable_entry_t*) PMA;
+//  (void)btable;
   /* USER CODE END 2 */
 
   /* Infinite loop */
