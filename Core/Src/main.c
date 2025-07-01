@@ -17,6 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <sd.h>
 #include "main.h"
 //#include "spi.h"
 #include "usb_device.h"
@@ -25,8 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "new_spi.h"
-
 #include "stm32f1xx.h"
 #include "stm32f1xx_hal.h"
 #include "usbd_def.h"

@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <sd.h>
 #include "usbd_storage_if.h"
-#include "new_spi.h"
 
 
 /* USER CODE BEGIN INCLUDE */

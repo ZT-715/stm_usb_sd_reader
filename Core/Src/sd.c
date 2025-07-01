@@ -8,7 +8,7 @@
 /* USER CODE END Header */
 
 //includes
-#include <new_spi.h>
+#include <sd.h>
 #include "stm32f1xx_hal.h"
 
 #include <stdint.h>
